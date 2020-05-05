@@ -1,0 +1,2 @@
+rootProject.name='yuanyangtest'
+include ':app'
