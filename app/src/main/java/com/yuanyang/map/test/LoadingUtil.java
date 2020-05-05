@@ -37,12 +37,17 @@ public class LoadingUtil {
     }
 
     public static void LoadingClose() {
-        if(dialog!=null)
+        if(dialog!=null){
             dialog.cancel();
+            dialog = null;
+        }
     }
 
-    public static void LoadingShow(String txt)
+    public static void LoadingShow(Context context,String txt)
     {
+        if(dialog == null){
+            Init(context);
+        }
         if (dialog!=null) {
             tv.setText(txt);
             dialog.show();

@@ -1,7 +1,5 @@
 package com.yuanyang.map.test;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,11 +7,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -31,8 +32,8 @@ import com.yuanyang.map.test.http.HttpGetAllPoint;
 import com.yuanyang.map.test.http.HttpGetAllPointStatusSetting;
 import com.yuanyang.map.test.http.HttpInsertPoint;
 import com.yuanyang.map.test.http.HttpUpdatePoint;
-import com.yuanyang.map.test.model.EventPoint;
 import com.yuanyang.map.test.model.EventLevelSetting;
+import com.yuanyang.map.test.model.EventPoint;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     /**
@@ -167,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void RefreshPointArray()
     {
-        LoadingUtil.LoadingShow("正在获取Point信息...");
+        LoadingUtil.LoadingShow(this,"正在获取Point信息...");
         HttpGetAllPoint httpGetAllPoint = new HttpGetAllPoint();
         httpGetAllPoint.SetListener(new HttpGetAllPoint.HttpGetAllPointListener() {
             @Override
@@ -207,8 +212,12 @@ public class MainActivity extends AppCompatActivity {
 
             View view = View.inflate(mMapView.getContext(), R.layout.infowidow, null);
             view.setBackgroundColor(Color.WHITE);
-            EditText et = view.findViewById(R.id.editText);
-            et.setText(eventPoint.title);
+//            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+//            layoutParams.width = mMapView.getWidth()/2;
+//
+//            view.setLayoutParams(layoutParams);
+            TextView title = view.findViewById(R.id.tv_title);
+            title.setText(eventPoint.title);
 
             final Button btnChangeStatus = view.findViewById(R.id.change_status);
             btnChangeStatus.setOnClickListener(new Button.OnClickListener() {
@@ -220,14 +229,6 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("point", eventPoint);
                     intent.putExtra("operation","update");
                     startActivityForResult(intent,111);
-                }
-            });
-
-            final Button btnclose = view.findViewById(R.id.close);
-            btnclose.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mBaiduMap.hideInfoWindow();
                 }
             });
 
@@ -355,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
     private void Refresh()
     {
         mBaiduMap.hideInfoWindow();
-        LoadingUtil.LoadingShow("正在获取Point设置信息...");
+        LoadingUtil.LoadingShow(this,"正在获取Point设置信息...");
         HttpGetAllPointStatusSetting httpGetAllPointStatusSetting = new HttpGetAllPointStatusSetting();
         httpGetAllPointStatusSetting.SetListener(new HttpGetAllPointStatusSetting.HttpGetAllPointStatusSettingListener() {
             @Override

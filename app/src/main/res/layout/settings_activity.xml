@@ -8,32 +8,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textColor="@color/cardview_dark_background"
         android:hint="请输入标题"
+        android:gravity="start|center"
         android:inputType="textPersonName" />
 
     <Spinner
         android:id="@+id/spinner_status"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/txt_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="请输入您的名字"
-        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txt_remark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:gravity="start|top"
+        android:gravity="start|center"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/cardview_dark_background"
         android:hint="请输入备注"
         android:inputType="textMultiLine" />
 
     <Button
+        android:layout_marginTop="5dp"
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

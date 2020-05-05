@@ -18,7 +18,7 @@ public class PointSettingActivity extends AppCompatActivity {
 
     Spinner spinnerStatus = null;
     EditText txtTitle = null;
-    EditText txtUser = null;
+//    EditText txtUser = null;
     EditText txtRemark = null;
     EventPoint mEventPoint;
     String mOperation;
@@ -36,7 +36,6 @@ public class PointSettingActivity extends AppCompatActivity {
         spinnerStatus.setAdapter(adapter);
 
         txtTitle = findViewById(R.id.txt_title);
-        txtUser = findViewById(R.id.txt_username);
         txtRemark = findViewById(R.id.txt_remark);
 
         Button btnSave = findViewById(R.id.button_save);
@@ -49,10 +48,11 @@ public class PointSettingActivity extends AppCompatActivity {
         mEventPoint = (EventPoint) intent.getSerializableExtra("point");
         mOperation = intent.getStringExtra("operation");
 
-        txtUser.setText( DataCenter.getInstance().GetLoginUserName());
+//        txtUser.setText( DataCenter.getInstance().GetLoginUserName());
 
         if (mOperation.equalsIgnoreCase("update"))
         {
+            txtTitle.setEnabled(false);
             txtTitle.setText(mEventPoint.title );
             txtRemark.setText(mEventPoint.remark);
 
@@ -64,9 +64,11 @@ public class PointSettingActivity extends AppCompatActivity {
                     break;
                 }
             }
+        }else {
+            txtTitle.setEnabled(true);
         }
 
-        txtUser.setEnabled(false);
+//        txtUser.setEnabled(false);
     }
 
     public class SaveButtonClicked implements Button.OnClickListener{
@@ -76,7 +78,7 @@ public class PointSettingActivity extends AppCompatActivity {
 
             Intent intent = new Intent();
             mEventPoint.title = txtTitle.getText().toString();
-            mEventPoint.editor = txtUser.getText().toString();
+            mEventPoint.editor = DataCenter.getInstance().GetLoginUserName();
             mEventPoint.level = ((EventLevelSetting) spinnerStatus.getSelectedItem()).level;
             mEventPoint.remark = txtRemark.getText().toString();
             intent.putExtra("point", mEventPoint);
